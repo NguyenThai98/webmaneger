@@ -1,0 +1,123 @@
+*{padding: 0;margin: 0;
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.285;
+}
+
+a, a:hover{
+    text-decoration: none;
+}
+ul,li{
+    list-style: none;
+}
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    border: 1px solid;
+    text-align: center;
+}
+/* 
+    1. General
+    2. Navigation
+*/
+
+/* ===== 1.General ==== */
+.container{
+    max-width: 1120px;
+    margin: 0 auto;
+}
+.row{
+    font-size: 0;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.row > [class*="col-"] {
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 15px;
+}
+.col-12{
+    width: 100%;
+}
+.col-9{
+    width: 75%;
+}
+.col-6{
+    width: 50%;
+}
+.col-4{
+    width: 33.333%;
+}
+.col-3{
+    width: 25%;
+}
+.clear-fix::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.main-content{
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0,0.05);
+}
+/* ==== 2.Navigation ==== */
+nav{
+    margin-bottom: 15px;
+}
+.menu{
+    background-color: rgba(0, 0, 0,0.1);
+    border-bottom:2px solid rgba(12, 125, 129, 0.8);
+}
+.menu li{
+    position: relative;
+}
+.menu li:hover > ul{
+    opacity: 1;
+    pointer-events: auto;
+}
+.menu ul{
+    position: absolute;
+    top: 100%;
+    background-color: rgb(231, 223, 216);
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    transition: all .3s ease;
+    border-top: 2px solid rgba(12, 125, 129, 0.8);
+    
+}
+.menu > li{
+    float: left;
+    width: 33.333%;
+    text-align: center;
+}
+.menu li.nav:nth-child(2){
+    border-right: 2px solid rgba(12, 125, 129, 0.8);
+    border-left: 2px solid rgba(12, 125, 129, 0.8);
+}
+.menu li a{
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    color: rgba(12, 125, 129, 0.8);
+    text-transform: uppercase;
+    padding: 10px 20px 3px 20px;
+    width: 100%;
+}
+.menu li a:hover{
+    background-color: rgba(12, 125, 129, 0.8);
+    color: seashell;
+}
+.menu li.active{
+ background-color: rgba(12, 125, 129, 0.8);
+}
+.menu li.active>a{
+    color: #fff;
+}

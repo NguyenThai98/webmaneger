@@ -1,0 +1,103 @@
+<main class="info_user">
+    {{#if lcIsAuthenticated}}
+    <div class="profile">
+        <div class="avatar">
+            {{#if lcAuthUser.avatar}}
+            <img src="/public/img/dao_tien.jpg" alt="" />
+            {{else}}
+            <img src="/public/img/avt_detail.png" alt="" />
+            <span>
+                <label for="file_up"> <i class="fa fa-camera" aria-hidden="true"></i></label>
+                <input type="file" name="avatar" id="file_up" />
+            </span>
+            {{/if}}
+        </div>
+        <div class="form_group_ntt">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name" disabled="disabled" value="{{lcAuthUser.full_name}}"
+                placeholder="Your name..." />
+        </div>
+        <div class="form_group_ntt">
+            <label for="role">Chức vụ</label>
+            <input type="text" name="role" id="role" disabled="disabled" value="{{lcAuthUser.position_detail}}" />
+        </div>
+
+        <div class="form_group_ntt">
+            <label for="rfid">RFID</label>
+            <input type="rfid" name="rfid" id="rfid" value="{{lcAuthUser.rf_id}}" disabled="disabled"
+                placeholder="Your rfid address" />
+        </div>
+
+        <div class="form_group_ntt">
+            <label for="password">New Password</label>
+            <input type="password" name="password" maxlength="10" id="password" placeholder="Your password..." />
+        </div>
+
+        <div class="form_group_ntt">
+            <label for="cf_password">Confirm New Password</label>
+            <input type="password" name="cf_password" maxlength="10" id="cf_password"
+                placeholder="Confirm password..." />
+        </div>
+
+        <div class="update_info"> <button>Update</button></div>
+    </div>
+    {{/if}}
+
+    <div class="device_inday">
+        <div class="table_device">
+            <h1 class="title_devide">Dụng cụ mang theo</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tên dụng cụ</th>
+                        <th>Vị trí</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody class="addData_device">
+                    {{#if data}}
+                    {{#each data}}
+                    {{#if no_lock}}
+                    <tr>
+                        <td>{{name_device}}</td>
+                        <td> {{pos_x}} / {{pos_y}}</td>
+                        <td class="borrow_device">Mượn</td>
+                    </tr>
+                    {{else}}
+                    <td>{{name_device}}</td>
+                    <td> {{pos_x}} / {{pos_y}}</td>
+                    <td class="taken_device">Trả</td>
+                    {{/if}}
+                    {{/each}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{{#section 'js' }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    let data = JSON.parse(localStorage.getItem('data_device'));
+    if (data) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].status == 'không khóa') {
+                $('.addData_device').append(` <tr>
+                    <td>${data[i].name_device}</td>
+                    <td>${data[i].pos_x} / ${data[i].pos_y}</td>
+                    <td class="borrow_device">Mượn</td>
+                </tr>`);
+            } else {
+                $('.addData_device').append(` <tr>
+                    <td>${data[i].name_device}</td>
+                    <td>${data[i].pos_x} / ${data[i].pos_y}</td>
+                    <td class="taken_device">Trả</td>
+                </tr>`);
+            }
+        }
+        localStorage.setItem('data_device', []);
+    }
+
+</script>
+{{/section}}

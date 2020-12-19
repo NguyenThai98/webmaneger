@@ -1,0 +1,240 @@
+<main>
+    <div class="row">
+        <div class="col-9">
+            <div class="all_item">
+                {{#if isUser }}
+                {{#each allDevices }}
+                {{#if notPermium }}
+                <div class="col-1_5">
+                    <div class="item">
+                        <div class="item_top">
+                            <img onclick="getDevice('{{rfid}}')" src="/public/img/{{image}}" width="50px" height="50px"
+                                alt=""> <br>
+                        </div>
+                        <div class="item_bottom">
+                            <span class="name">{{ name_device }}</span>
+                            <button class="btn-detail" onclick="getDevice('{{rfid}}')">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="col-1_5">
+                    <div class="item premium">
+                        <div class="item_top">
+                            <img src="/public/img/{{image}}" onclick="deniedDevice()" width="50px" height="50px" alt="">
+                            <br>
+                        </div>
+                        <div class="item_bottom">
+                            <span class="name">{{ name_device }}</span>
+                            <button class="btn-detail" onclick="deniedDevice()">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+                {{/each}}
+                {{else}}
+                {{#each allDevices }}
+                <div class="col-1_5">
+                    <div class="item _u">
+                        <div class="item_top">
+                            <img src="/public/img/{{image}}" onclick="getDevice('{{rfid}}')" width="50px" height="50px"
+                                alt=""> <br>
+                        </div>
+                        <div class="item_bottom">
+                            <span class="name">{{ name_device }}</span>
+                            <button class="btn-detail" onclick="getDevice('{{rfid}}')">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{/ each}}
+                {{/if}}
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="detail_device">
+                <div class="img_device">
+                    <img src="" width="50px" height="100px" alt="">
+                </div>
+                <div class="content_device">
+                    <span class="name_device">
+                        <b>Tên:&nbsp;&nbsp;</b> <span class="name_device_dt"> </span> --
+                        <span class="position_device_dt"> </span>
+                    </span> <br>
+                    <span class="status_device">
+                        <b>Trạng Thái:&nbsp;&nbsp;</b> <span class="status_device_dt"></span> <br>
+                        <b>Thời Gian Mượn:</b> <span class="date_rent">
+                        </span> <br>
+                        <b>Người Mượn:</b> <span class="person_rent">
+                        </span>
+                        <input type="hidden" id="rfid_device">
+                    </span>
+
+                </div>
+                <div class="handle_device">
+                    <span><b>Thao Tác:&nbsp;&nbsp;</b></span>
+                    {{#if isUser}}
+                    <button onclick="fborrow()" class="btn_device borrow">Đăng ký lấy từ xa</a> </button>
+                    {{/if}}
+                    {{#if isAdmin}}
+                    <button onclick="fborrow()" class="btn_device borrow">Đăng ký lấy từ xa</a> </button>
+                    {{/if}}
+                    {{#if isCustomer}}
+                    <button class="btn_device_edit registe" disabled="disabled"><i class="fa fa-times-circle"
+                            aria-hidden="true"></i></button>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="borrow">
+                <form id="formBorrow">
+                    <label for="date_rent" id="lbl_date_rent">Ngày Mượn</label>
+                    <input type="text" id="date_rent" />
+                    <label for="date_back" id="lbl_date_back">Ngày Trả</label>
+                    <input type="text" id="date_back" />
+                    <label for="note">Ghi Chú</label> <br />
+                    <input type="text" id="note_deive" />
+                    <div class="handle">
+                        <div id="submit_" onclick="fRegisterDevice()">Đăng Ký</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{{#section 'js' }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+    let btn_borrow = document.querySelector('#formBorrow');
+    let lbl_date_back = document.querySelector('#lbl_date_back');
+    let date_back = document.querySelector('#date_back');
+    let date_rent = document.querySelector('#date_rent');
+    let note_deive = document.querySelector('#note_deive');
+    let submit = document.querySelector('#submit_');
+    let rfid_device = document.querySelector('#rfid_device');
+    let btn_device_register = document.querySelector('.btn_device.borrow');
+    let dateToday = new Date();
+    let tomorrow = new Date(dateToday.getTime() + 24 * 60 * 60 * 1000);
+    $('#date_back').datetimepicker({
+        format: 'd/m/Y H:i',
+        minDate: tomorrow,
+
+    })
+    $('#date_rent').datetimepicker({
+        format: 'd/m/Y H:i',
+        minDate: tomorrow,
+
+    })
+    function fRegisterDevice() {
+        let data = {
+            date_back: date_back.value,
+            date_rent: date_rent.value,
+            note_report: note_deive.value,
+            rfid: rfid_device.value,
+        }
+        if (!data.date_back || !data.date_rent || !data.note_report || !data.rfid) {
+            alert("Bạn vui lòng điền đủ thông tin.");
+        } else {
+            fetch("/device/register-tool", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.msgSuccess) {
+                        window.location.reload();
+                    } else {
+                        alert(data.msgErr);
+                        date_back.value = "";
+                        date_rent.value = "";
+                        note_report.value = "";
+                    }
+
+                })
+        }
+    }
+    function fborrow() {
+        btn_borrow.style.opacity = '1';
+        btn_borrow.style.visibility = 'visible';
+        submit.style.display = 'block';
+        submit.style.opacity = '1';
+        submit.style.visibility = 'visible';
+        lbl_date_back.style.display = 'block';
+        date_back.style.display = 'block';
+        lbl_date_back.style.opacity = '1';
+        lbl_date_back.style.visibility = 'visible';
+        date_back.style.opacity = '1';
+        date_back.style.visibility = 'visible';
+
+    }
+
+    function getDevice(rfid) {
+        if (rfid) {
+            let data = {
+                rfid: rfid
+            }
+            fetch("/device/get-device", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    biding_item(data);
+                })
+        } else {
+            alert("RFID NOT FOUND.")
+        }
+
+    }
+    getDevice(123);
+    function biding_item(data) {
+        let img_device = document.querySelector('.img_device > img').getAttribute("src");
+        let name_device_dt = document.querySelector('.name_device_dt');
+        let position_device_dt = document.querySelector('.position_device_dt');
+        let status_device_dt = document.querySelector('.status_device_dt');
+        let date_rent = document.querySelector('.date_rent');
+        let person_rent = document.querySelector('.person_rent');
+        btn_borrow.style.opacity = '0';
+        btn_borrow.style.visibility = 'hidden';
+
+        if (data) {
+            rfid_device.value = data.rfid;
+            name_device_dt.innerHTML = data.name_device;
+            position_device_dt.innerHTML = "Vị Trí: " + data.pos_x + '/' + data.pos_y;
+            img_device = document.querySelector('.img_device > img').setAttribute("src", `/public/img/${data.image}`);
+            status_device_dt.innerHTML = data.status;
+            if (data.status == 'không khóa') {
+                date_rent.innerHTML = 'None';
+                person_rent.innerHTML = 'None';
+                btn_device_register.style.display = 'inline-block';
+            } else if (data.status == 'khóa' && data.full_name != undefined && data.date_rent != undefined) {
+                date_rent.innerHTML = data.date_rent;
+                person_rent.innerHTML = data.full_name;
+                btn_device_register.style.display = 'none';
+            }
+
+        }
+    }
+    function deniedDevice() {
+        alert("Bạn Không đủ quyền.");
+    }
+</script>
+{{/section}}
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}

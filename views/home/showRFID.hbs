@@ -1,0 +1,220 @@
+<div class="titleLogin">
+    <h3>Danh sách RFID mới được quét</h3>
+</div>
+<div class="formLogin">
+    <form id="formLogin">
+        <div class="showErr"></div>
+        {{#if successMsg}}
+        <div class="showErr">{{successMsg}}</div>
+        {{/if}}
+        {{#if lcIsAuthenticated}}
+        <div class="I_password" style="text-align: center;">
+            <label for="rfid">Xin Chào {{lcAuthUser.full_name}}</label>
+        </div>
+        {{else}}
+
+        <div class="I_password">
+            <label for="rfid">RFID</label><br />
+            <input type="password" id="rfid" value="{{rfid_account}}" name="rfid"
+                placeholder="Vui lòng nhập mã RFID"></input>
+        </div>
+        <div class="bottom_form mb-4">
+            <a href="javascript:void(0)" onclick="submitFormLogin()"> LOGIN</a>
+        </div>
+        {{/if}}
+    </form>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="titleLogin">
+                <h3>Danh sách dụng cụ đã tồn tại</h3>
+            </div>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Mã RFID</th>
+                        <th scope="col">Tên Dụng cụ</th>
+                        <th scope="col">Vị trí</th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each exRFID}}
+                    <tr>
+                        <td>{{rfid}}</td>
+                        <td>{{name_device}}</td>
+                        <td><button type="button" data-toggle="modal" data-target="#dtPositon"
+                                class="btn btn-dark">{{pos_x}}/{{pos_y}}</button></td>
+                        <td>
+                            {{#if MUON_TRA}}
+                            <button type="button" data-toggle="modal" data-target="#modelEdit"
+                                class="btn btn-warning">Trả</button>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <div class="titleLogin">
+                <h3>Danh sách RFID chưa tồn tại</h3>
+            </div>
+            <table class="table table-hover text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Mã RFID</th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each exRFID}}
+                    <tr>
+                        <td class="rfid_nEx">{{rfid}}</td>
+                        <td>
+                            {{#if TAO_TAI_KHOAN}}
+                            <button type="button" data-toggle="modal" data-target="#Register_Account"
+                                class="btn btn-info">ĐKTK</button>
+                            {{/if}}
+                            {{#if THEM_DUNG_CU}}
+                            <button type="button" data-toggle="modal" data-target="#add_Device"
+                                class="btn btn-success">ĐKDC</button>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dtPositon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase text-center" id="exampleModalLabel">Xóa tài khoản</h5>
+            </div>
+            <div class="modal-body">
+                <h5>Bạn có chắc chắn xóa tài khoản này ?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_Device" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title text-uppercase text-center" id="exampleModalLongTitle">Chỉnh sửa tài khoản</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="account_name">Tên tài khoản</label>
+                        <input type="text" class="form-control" id="account_name" disabled="disabled" value="Thaigogo">
+                    </div>
+                    <div class="form-group">
+                        <label for="rfid">RFID</label>
+                        <input type="text" class="form-control" placeholder="Nhập RFID...">
+                    </div>
+                    <div class="form-group">
+                        <label for="rfid">Mật khẩu mới</label>
+                        <input type="text" class="form-control" placeholder="Nhập mật khẩu mới...">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-info ">Lưu thay đổi</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Register_Account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title text-uppercase text-center" id="exampleModalLongTitle">Chỉnh sửa tài khoản</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="account_name">Tên tài khoản</label>
+                        <input type="text" class="form-control" id="account_name" disabled="disabled" value="Thaigogo">
+                    </div>
+                    <div class="form-group">
+                        <label for="rfid">RFID</label>
+                        <input type="text" class="form-control" placeholder="Nhập RFID...">
+                    </div>
+                    <div class="form-group">
+                        <label for="rfid">Mật khẩu mới</label>
+                        <input type="text" class="form-control" placeholder="Nhập mật khẩu mới...">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-info ">Lưu thay đổi</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{#section 'js'}}
+<script>
+    function submitFormLogin() {
+        let rfid_value = document.getElementById("rfid");
+        let showMsg = document.querySelector('.showErr');
+        if (rfid == "") {
+            showMsg.value = "RFID không được để trống";
+        } else {
+            let data = {
+                rfid: rfid_value.value
+            }
+            fetch("/user/loginRFID", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.msgErr) {
+                        showMsg.innerHTML = data.msgErr;
+                        showMsg.style.display = "block";
+                        setTimeout(() => {
+                            showMsg.style.display = "none";
+                        }, 2000);
+                    } else {
+                        let pathname = window.location.pathname;
+
+                        if (pathname && pathname != '/user/login') {
+                            window.location.replace(pathname);
+                        }
+                    }
+
+                })
+        }
+    }
+</script>
+
+{{/section}}

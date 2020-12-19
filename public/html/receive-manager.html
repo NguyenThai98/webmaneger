@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style-receive-manager.css">
+    <link rel="text/javascript" href="../js/home.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>HOME</title>
+</head>
+<body>
+    <nav id="menu">
+    <div class="container">
+        <ul id= "navDiv"class="menu clear-fix">
+            <li class="nav active"><a href="#">Đăng kí trả</a>
+                <ul>
+                    <li><a href="#">Đăng kí mượn</a></li>
+                    <li><a href="#">Đăng kí lấy từ xa</a></li>
+                </ul>
+            </li>
+            <li class="nav"><a href="#">Quản lí tủ</a></li>
+            <li class="nav"><a href="#">Quản lí user</a></li>
+            <li class="nav"><a href="#">Báo cáo</a></li>
+            <li class="nav"><a href="#">Hệ thống</a></li>
+            <li class="nav">
+                <a href="#">Tài khoản</a>
+                <ul>
+                    <li><a href="#">Đăng xuất</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    </nav>
+    <main id="main-content">
+        <div class="container">  
+          <div class="fresh-table full-color-orange">
+            <!--
+              Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+              Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+            -->
+          
+            <div class="table-toolbar">
+              <div class="pull-right columns btn-group columns-right">
+                <button class="btn btn-default" type="button" name="refresh" title="Refresh" aria-label="refresh">
+                  <i class="glyphicon .glyphicon-list-alt fa fa-refresh" aria-hidden="true"></i>
+                </button>
+                <div class="keep-open btn-group" title="Columns">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-label="Columns" title="Columns">
+                    <i class="glyphicon glyphicon-th fa fa-th-list" aria-hidden="true"></i>
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-maker" role="menuitem">
+                      <label>
+                        <input type="checkbox" data-field="id" value="0" checked="checked">
+                        <span>ID</span>
+                      </label>
+                    </li>
+                    <li class="dropdown-maker" role="menuitem">
+                      <label>
+                        <input type="checkbox" data-field="name" value="1" checked="checked">
+                        <span>Name</span>
+                      </label>
+                    </li>
+                    <li class="dropdown-maker" role="menuitem">
+                      <label>
+                        <input type="checkbox" data-field="salary" value="2" checked="checked">
+                        <span>Salary</span>
+                      </label>
+                    </li>
+                    <li class="dropdown-maker" role="menuitem">
+                      <label>
+                        <input type="checkbox" data-field="country" value="3" checked="checked">
+                        <span>Country</span>
+                      </label>
+                    </li>
+                    <li class="dropdown-maker" role="menuitem">
+                      <label>
+                        <input type="checkbox" data-field="city" value="4" checked="checked">
+                        <span>City</span>
+                      </label>
+                    </li>
+                    <li class="dropdown-maker" role="menuitem">
+                      <label>
+                        <input type="checkbox" data-field="actions" value="5" checked="checked">
+                        <span>Actions</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pull-right search input-group">
+                <input class="form-control search-input"  type="search" placeholder="Tìm kiếm" autocomplete="off">
+              </div>
+            </div>
+            <div class="table-container" style="padding-bottom:0px">
+              <div class="table-header" style="display: none;">
+                <table></table>
+              </div>
+              <div class="table-body">
+                <div class="table-loading table table-hover table-striped">
+                  <span class="loading-wrap">
+                    <span class="loading-text"></span>
+                    <span class="animation-wrap">
+                      <span class="animation-dot"></span>
+                    </span>
+                  </span>
+                </div>
+                <table id="fresh-table" class="table table-hover table-striped">
+                  <thead>
+                    <th data-field="id">ID</th>
+                    <th data-field="name">Name</th>
+                    <th data-field="salary">Salary</th>
+                    <th data-field="country">Country</th>
+                    <th data-field="city">City</th>
+                    <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Dakota Rice</td>
+                      <td>$36,738</td>
+                      <td>Niger</td>
+                      <td>Oud-Turnhout</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Minerva Hooper</td>
+                      <td>$23,789</td>
+                      <td>Curaçao</td>
+                      <td>Sinaai-Waas</td>
+                      <td></td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-footer">
+                <table>
+                  <thead>
+                    <tr></tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+            <div class="table-pagination">
+              <div class="pull-left pagination-detail">
+                <span class="pagination-info"></span>
+                
+              </div>
+              <div class="pull-right pagination">
+                <ul class="pagination">
+                  <li class="page-item page-pre">
+                    <a href="javascript:void(0)" class="page-link" aria-label="previous page">a</a>
+                  </li>
+                  <li class="page-item active">
+                    <a href="javascript:void(0)" class="page-link" aria-label="to page 1">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="javascript:void(0)" class="page-link" aria-label="to page 2">2</a>
+                  </li>
+                  <li class="page-item page-last-separator disable">
+                    <a href="javascript:void(0)" class="page-link">...</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="javascript:void(0)" class="page-link" aria-label="to page 7">7</a>
+                  </li>
+                  <li class="page-item page-next">
+                    <a href="javascript:void(0)" class="page-link" aria-label="next page">b</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+</body>
+
+</html>
