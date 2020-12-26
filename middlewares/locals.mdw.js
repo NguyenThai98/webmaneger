@@ -1,5 +1,6 @@
 const LRU = require("lru-cache");
 const deviceModel = require("../models/device.model");
+const categoryModel = require("../models/category.model");
 const accountRoleModle = require('../models/account_role.model');
 const cache = new LRU({
     max: 1000,
@@ -7,22 +8,13 @@ const cache = new LRU({
 })
 module.exports = function (app) {
     app.use(async function (req, res, next) {
-        const data = cache.get('allDevices');
+        const data = cache.get('selectMenus');
         if (!data) {
-            const allDevices = await deviceModel.all();
-            res.locals.allDevices = allDevices;
-            cache.set('allDevices', allDevices);
-
+            const selectMenus = await categoryModel.selectMenu();
+            res.locals.selectMenus = selectMenus;
+            cache.set('selectMenus', selectMenus);
         } else {
-            for (let index = 0; index < data.length; index++) {
-                if (data[index].role == 0) {
-                    data[index].notPermium = "NORMAL";
-                }
-                if (data[index].status_account == 'lock') {
-                    data[index].isLock = true;
-                }
-            }
-            res.locals.allDevices = data;
+            res.locals.selectMenus = data;
         }
         next();
     })
@@ -32,7 +24,7 @@ module.exports = function (app) {
         }
         res.locals.lcIsAuthenticated = req.session.isAuthenticated;
         res.locals.lcAuthUser = req.session.authUser;
-        if (res.locals.lcAuthUser) {
+        if (res.locals.lcAuthUser) {    
             const role_accounts = await accountRoleModle.selectRoleUser(res.locals.lcAuthUser.id_account);
             for (let index = 0; index < role_accounts.length; index++) {
                 if (role_accounts[index].name_role == 'PHAN_QUYEN_CAP_NHAT_MK' && role_accounts[index].status_account == 1) {

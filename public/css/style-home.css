@@ -115,6 +115,7 @@ li.nav{
 li.nav > a{
     display:block;
     padding: 10px;
+    width: 100%;
 }
  
 .menu_info > img{
@@ -193,15 +194,32 @@ padding: 10px 0;
 text-align: center;
 }
 .menu_borrow{
-
 display: flex;
-
 flex-wrap: wrap;
-
-justify-content: space-around;
+justify-content: space-between;
+height: 100vh;
+align-items: flex-start;
+margin-top: 50px;
 }
-.nav_borrow ul{
-    display:none;
+ul.subMenu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+}
+.subMenu  li {
+    background:var(--mau1);
+    margin: 3px 0;
+    padding: 2px 0;
+    cursor: pointer;
+    text-align:center;
+}
+ul.subChildMenu{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 120%;
+    margin: 0 5px;
 }
 /* menu_borrow xxxxxxx*/
 
@@ -282,7 +300,7 @@ footer{
  .I_gmail , .I_password{
      margin: 10px 0;
  }
- .bottom_form > a{
+ .bottom_form > a, .bottom_form > button{
      border:none;
      padding: 10px;
      width: 50%;
@@ -293,7 +311,7 @@ footer{
      transition:0.4s;
      outline: none;
  }
- .bottom_form > a:hover{
+ .bottom_form > a:hover,.bottom_form > button:hover{
      background: #1b262ccf;
  }
  .bottom_form {
@@ -652,6 +670,38 @@ border: 1px solid var(--mau1);
     z-index: 99999999999999999999;
     display: none;
 }
+.subMenu > li.active_Categories,.active_Categories_parent{
+    background:var(--mau4);
+}
+.active_Categories,.active_Categories_parent > a{
+    color: #fff;
+}
+.modal-content{
+    text-align: left;
+}
+.badge{
+    font-size: 14px;
+    font-weight: 500;
+}
+.layout-cabinet{
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;
+    width: 465px;
+    height: 345px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: repeat(19, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+}
+
+.slot:hover{
+    background-color: var(--mau4);
+}
+ 
 /* /table auth xxxxxxxxx*/
 
 /* allHistory */

@@ -5,35 +5,50 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div class="formAddDevice">
-                <form>
-                    <div class="form-group">
-                        <label for="name_device">Tên dụng cụ</label>
-                        <input type="text" class="form-control" id="name_device" placeholder="Nhập tên...">
+            <div class="formRegister">
+                <form id="formRegister" action="/device/addDevice" method="post" enctype="multipart/form-data">
+                    {{#if msgErr}}
+                    <div class="showErr">{{msgErr}}</div>
+                    {{/if}}
+                    <div class="I_gmail">
+                        <label for="name_device">Tên dụng cụ</label> <br />
+                        <input type="text" name="name_device" id="name_device" placeholder="Nhập tên dụng cụ"></input>
                     </div>
-                    <div class="form-group">
-                        <label for="avatar_device">Hình ảnh</label>
-                        <input type="text" class="form-control" id="avatar_device" placeholder="Nhập tên...">
+                    <div class="I_gmail" id="image_device">
+                        <label style="
+    display: flex;
+    align-items: center;
+" for="image">Hình đại diện <img style="
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+" src="/public/vendor/image/camera.svg" alt=""> </label>
+
+                        <img id="showImage" src="/public/img/imgdefault.PNG" alt="Hình dại diện dụng cụ"
+                            style="width: 100px; object-fit: cover; height: 80px;display: none;">
+                        <input type="file" name="image" style="display: none" id="image" accept="image/*"></input>
                     </div>
-                    <div class="form-group">
-                        <label for="kind_device">Loại dụng cụ</label>
-                        <select class="custom-select" id="kind_device_sl">
-                            <option selected>Chọn...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+                    <div class="I_gmail">
+                        <label for="id_product">Loại dụng cụ</label> <br />
                     </div>
-                    <div class="form-group">
-                        <label for="RFID">RFID</label>
-                        <input type="text" class="form-control" id="length_device" placeholder="Nhập độ dài...">
+                    <select class="form-control" id="id_product"
+                        style="height: 43px;border: 2px solid var(--mau4);border-radius: 0;" name="id_product">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="I_gmail">
+                        <label for="rfid">RFID</label> <br />
+                        <input type="password" name="rfid" id="rfid"></input>
                     </div>
-                    <div class="form-group">
-                        <label for="position_device">Vị trí</label> <br>
-                        <button class="btn btn-outline-dark  w-100">Chọn vị trí</button>
+                    <div class="I_gmail">
+                        <label for="pos">Chọn vị trí</label> <br />
+                        <input type="text" name="pos" id="pos"></input>
                     </div>
                     <div class="bottom_form">
-                        <input type="submit" value="Thên dụng cụ">
+                        <button type="submit"> THÊM DỤNG CỤ </button>
                     </div>
 
                 </form>
@@ -42,3 +57,22 @@
         <div class="col-md-3"></div>
     </div>
 </div>
+
+{{#section 'js'}}
+<script type="text/javascript">
+    let image = document.querySelector('#image');
+    image.addEventListener('change', function () {
+        readURL(this);
+    })
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#showImage').css('display', 'block');
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+{{/section}}

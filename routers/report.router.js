@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const reportCtl = require('../controllers/report.ctl');
 const auth = require('../middlewares/auth.mdw');
-
+const reportModel = require('../models/report.model');
 router.get('/', auth, reportCtl.getAllReport);
+router.get('/allPage', reportCtl.allPage);
 router.get('/historyUser', auth, reportCtl.getReportOne);
+router.get('/historyAction', auth, reportCtl.historyAction);
 router.get('/exports', reportCtl.export);
-router.get('/allHistory', (req, res) => {
-    res.render('report/allHistory');
-}); // n
+router.get('/exportsBorrow', reportCtl.exportBorrow);
+router.get('/exportsBack', reportCtl.exportBack);
+router.get('/exportsGet', reportCtl.exportGet);
+router.get('/rest',auth, reportCtl.deviceRemaining);
 module.exports = router;

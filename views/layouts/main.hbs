@@ -21,7 +21,7 @@
 
 <body>
     <div class="alert alert-primary alert-dismissible fade show left_device" role="alert">
-        <strong>Thaigogo</strong> Đã đăng ký sản phẩm mới
+        <strong class="notification"></strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -60,7 +60,7 @@
                         {{#or DUYET_DUNG_CU XUAT_FILE_KIEM_KE}}
                         <li class="nav"><a href="#">Báo cáo</a>
                             <ul>
-                                <li><a href="/report/allHistory">Lịch Sử</a></li>
+                                <li><a href="/report/historyAction">Lịch Sử</a></li>
                                 <li><a href="/device/checkShelf">Kiểm kê</a></li>
                                 {{#if CAP_NHAT_CL_DUNG_CU}}
                                 <li><a href="#">Hiệu chỉnh</a></li>
@@ -68,7 +68,7 @@
                                 {{#if DUYET_DUNG_CU}}
                                 <li><a href="/admin/accepts">Duyệt</a></li>
                                 {{/if}}
-                                <li><a href="#">Cảnh báo tồn kho (4)</a></li>
+                                <li><a href="/report/rest">Thiết Bị Tồn Kho</a></li>
                             </ul>
                         </li>
                         {{/or}}
@@ -85,7 +85,7 @@
                             {{#if lcIsAuthenticated}}
                             <div class="menu_info">
                                 <img src="/public/img/dao_tien.jpg" width="25px" height="25px" alt="avatar">
-                                <span><a href="/user/info">{{lcAuthUser.full_name}}</a></span>
+                                <span><a href="/user/info" class="full_name_header">{{lcAuthUser.full_name}}</a></span>
                             </div>
                             <div class="login">
                                 <a href="/user/logout">Đăng Xuất</a>
@@ -103,27 +103,8 @@
         </div>
     </nav>
     {{{body}}}
-    {{!-- <footer>
-        <div class="row">
-            <div class="col-9">
-                <div class="row">
-                    <div class="col-4">
-                        <h3>Chính Sách</h3>
-                    </div>
-                    <div class="col-4">
-                        <h3>Liên Hệ</h3>
-                    </div>
-                    <div class="col-4">
-                        <h3>Liên Hệ</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <h2>Công Ty TNHH</h2>
-            </div>
-        </div>
-    </footer> --}}
-
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/home.js"></script>
     {{{_sections.js}}}
     <!-- slick -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -136,7 +117,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <!-- Cusstom javascrips -->
-    <script src="/public/js/home.js"></script>
+
+
 </body>
 
 </html>

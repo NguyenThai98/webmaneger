@@ -11,4 +11,7 @@ module.exports = {
     updateStatusRole: function (entity, condition, condition2) {
         return db.patchTwoCondition(TBL_ACCOUNT_ROLE, entity, condition, condition2);
     },
+    listUserAuthBorrow: function () {
+        return db.load(`select id_account FROM account_role WHERE id_role = 3 and status_account = 1`);
+    }
 }
